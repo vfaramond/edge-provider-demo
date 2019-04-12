@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edge Provider demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.css"
+    />
+  </head>
+  <body>
+    <button onclick="getWalletAddress()">Select wallet</button>
+
+    <script>
+      async function getWalletAddress() {
+        if (typeof window.edgeProvider !== "object") {
+          return window.alert("edgeProvider is not defined");
+        }
+
+        const currencyCode = await window.edgeProvider.chooseCurrencyWallet([
+          "BCH",
+          "BTC",
+          "ETH"
+        ]);
+
+        document.getElementById("selectedCurrency").innerHTML = currencyCode;
+
+        const edgeReceiveAddress = await window.edgeProvider.getReceiveAddress({
+          metadata: {
+            name: "Moonpay",
+            category: `Exchange:Buy ${currencyCode.toUpperCase()}`
+          }
+        });
+
+        document.getElementById("walletAddress").innerHTML =
+          edgeReceiveAddress.publicAddress;
+      }
+    </script>
+
+    <h3>Selected currency</h3>
+    <p id="selectedCurrency">None</p>
+
+    <h3>Wallet address</h3>
+    <p id="walletAddress">N/A</p>
+  </body>
+</html>
