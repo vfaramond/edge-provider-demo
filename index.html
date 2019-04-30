@@ -17,9 +17,16 @@
         }
 
         const currencyCode = await window.edgeProvider.chooseCurrencyWallet([
+          "BAT",
           "BCH",
+          "BNB",
           "BTC",
-          "ETH"
+          "EOS",
+          "ETH",
+          "LTC",
+          "TRX",
+          "XLM",
+          "XRP"
         ]);
 
         document.getElementById("selectedCurrency").innerHTML = currencyCode;
